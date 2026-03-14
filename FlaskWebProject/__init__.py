@@ -10,7 +10,16 @@ from flask_session import Session
 
 app = Flask(__name__)
 app.config.from_object(Config)
-# TODO: Add any logging levels and handlers with app.logger
+
+# --- UPDATED LOGGING SECTION ---
+# This tells Flask to capture "INFO" level messages (like successful logins)
+app.logger.setLevel(logging.INFO)
+
+# This handler redirects the logs to the terminal/console so Azure Log Stream can see them
+stream_handler = logging.StreamHandler()
+app.logger.addHandler(stream_handler)
+# -------------------------------
+
 Session(app)
 db = SQLAlchemy(app)
 login = LoginManager(app)
